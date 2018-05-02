@@ -1,0 +1,162 @@
+MailMessage msg = new MailMessage();
+            msg.From =
+                new MailAddress("papCXXXXXda@microsoft.com", "papXXXa");
+
+            // To addresses
+            msg.To.Add("papatida@microsoft.com");
+
+            // You can specify CC and BCC addresses also
+
+            // Set to high priority
+            msg.Priority = MailPriority.High;
+
+            msg.Subject = "Hey, a fabulous site!";
+
+            // You can specify a plain text or HTML contents
+            msg.Body = File.ReadAllText(@"C:\inetpub\wwwroot\ClassASP\index.html");
+               
+     
+            msg.IsBodyHtml = true;
+            
+            SmtpClient client = new SmtpClient();
+            client.Host = "smtp.sendgrid.net";
+            client.Port = 578;
+            
+            //client.EnableSsl = true;
+            // The server requires user's credentials
+            // not the default credentials
+            client.UseDefaultCredentials = false;
+            // Provide your credentials
+            client.Credentials = new System.Net.NetworkCredential
+                                    ("azure_c96fXXXXXX9cc@azure.com",
+                                    "AXXXX2");
+            client.DeliveryMethod = SmtpDeliveryMethod.Network;
+
+            // Use SendAsync to send the message asynchronously
+            client.Send(msg);
+
+
+
+
++++++++++++++++++++++++++++++++++++++++++
+https://docs.microsoft.com/en-us/azure/sendgrid-dotnet-how-to-send-email
+
+
+Using API key : 
+  static void Main(string[] args)
+        {
+
+            try
+            {
+                var apiKey = "your send grid API key>";
+                var client = new SendGridClient(apiKey);
+                var msg = new SendGridMessage()
+                {
+                    From = new EmailAddress("test@example.com", "DX Team"),
+                    Subject = "Hello World from the SendGrid CSharp SDK!",
+                    PlainTextContent = "Hello, Email!",
+                    HtmlContent = "<strong>Hello, Email!</strong>"
+                };
+                msg.AddTo(new EmailAddress("abcd@xyz.com", "Test User"));
+                var response = client.SendEmailAsync(msg).Result;
+                response.ToString();
+            }
+            catch(Exception ex)
+            {
+                string error = string.Empty;
+                error = " Exception : LEVEL 1: " + Environment.NewLine + ex.Message;
+                if (ex.InnerException != null)
+                {
+                    error = error + Environment.NewLine + "LEVEL 2:" + Environment.NewLine + ex.InnerException.Message;
+                    if (ex.InnerException.InnerException != null)
+                    {
+                        error = error + Environment.NewLine + "LEVEL 3:" + Environment.NewLine + ex.InnerException.InnerException.Message;
+
+                        if (ex.InnerException.InnerException.InnerException != null)
+                        {
+                            error = error + Environment.NewLine + "LEVEL 4:" + Environment.NewLine + ex.InnerException.InnerException.InnerException.Message;
+                            if (ex.InnerException.InnerException.InnerException.InnerException != null)
+                            {
+                                error = error + Environment.NewLine + "LEVEL 5:" + Environment.NewLine + ex.InnerException.InnerException.InnerException.InnerException.Message;
+                            }
+                        }
+                    }
+                }
+
+            }
+
+        }
+
+Using SMTP credential :
+  static void Main(string[] args)
+        {
+            try
+
+            {
+
+                MailMessage msg = new MailMessage();
+                msg.From =
+                    new MailAddress("sender@alkj.com", "name");
+
+                // To addresses
+                msg.To.Add("abcd@xyz.com ");
+
+                // You can specify CC and BCC addresses also
+
+                // Set to high priority
+                msg.Priority = MailPriority.High;
+
+                msg.Subject = "Hey, a fabulous site!";
+
+                // You can specify a plain text or HTML contents
+                //msg.Body = File.ReadAllText(@"C:\inetpub\wwwroot\ClassASP\index.html");
+
+
+                msg.IsBodyHtml = true;
+
+                SmtpClient client = new SmtpClient();
+                client.Host = "smtp.sendgrid.net";
+                //client.Port = 578;
+                client.Port = 587;
+
+                //client.EnableSsl = true;
+                // The server requires user's credentials
+                // not the default credentials
+                client.UseDefaultCredentials = false;
+                // Provide your credentials
+                client.Credentials = new System.Net.NetworkCredential
+                                        ("<your send grid USERNAME >@azure.com",
+                                        "<sendgrid password");
+                client.DeliveryMethod = SmtpDeliveryMethod.Network;
+
+                // Use SendAsync to send the message asynchronously
+                client.Send(msg);
+            }
+            catch (Exception ex)
+            {
+                string error = string.Empty;
+                error = " Exception : LEVEL 1: " + Environment.NewLine + ex.Message;
+                if (ex.InnerException != null)
+                {
+                    error = error + Environment.NewLine + "LEVEL 2:" + Environment.NewLine + ex.InnerException.Message;
+                    if (ex.InnerException.InnerException != null)
+                    {
+                        error = error + Environment.NewLine + "LEVEL 3:" + Environment.NewLine + ex.InnerException.InnerException.Message;
+
+                        if (ex.InnerException.InnerException.InnerException != null)
+                        {
+                            error = error + Environment.NewLine + "LEVEL 4:" + Environment.NewLine + ex.InnerException.InnerException.InnerException.Message;
+                            if (ex.InnerException.InnerException.InnerException.InnerException != null)
+                            {
+                                error = error + Environment.NewLine + "LEVEL 5:" + Environment.NewLine + ex.InnerException.InnerException.InnerException.InnerException.Message;
+                            }
+                        }
+                    }
+                }
+
+                error.ToString();
+
+            }
+        }
+
+

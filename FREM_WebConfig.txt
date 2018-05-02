@@ -1,0 +1,18 @@
+Modify the Web.Config in Kudu by adding this to the system.webServer section of the Web.Config (don't forget to set it back when you are done!)
+ 
+<tracing>
+  <traceFailedRequests>
+    <remove path="*" />
+    <add path="*">
+      <traceAreas>
+        <add provider="ASP" verbosity="Verbose" />
+        <add provider="ASPNET" areas="Infrastructure,Module,Page,AppServices" verbosity="Verbose" />
+        <add provider="ISAPI Extension" verbosity="Verbose" />
+        <add provider="WWW Server" areas="Authentication,Security,Filter,StaticFile,CGI,Compression,
+Cache,RequestNotifications,Module,FastCGI"
+       verbosity="Verbose" />
+      </traceAreas>
+      <failureDefinitions statusCodes="300-404" />
+    </add>
+  </traceFailedRequests>
+</tracing>

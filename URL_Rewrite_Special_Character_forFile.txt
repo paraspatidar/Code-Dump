@@ -1,0 +1,30 @@
+<rule name='Redirect kan.org.il' stopProcessing='false'>
+<match url='(.*)'/>  
+            <conditions logicalGrouping='MatchAny'>
+              <add input='{HTTP_HOST}' pattern='^kax\\.org\\.il$'/>
+            </conditions>
+            <action type='Redirect' url='http://www.kax.org.il/{R:0}' redirectType='Permanent'/>                      
+                </rule>
+
+
+To  something like this one :
+<rules>
+            <rule name="Redirect rquests to default azure websites domain" stopProcessing="true">
+                <match url="(.*)" />  
+                <conditions logicalGrouping="MatchAny">
+                  <add input="{HTTP_HOST}" pattern="^resourcemigration\.azurewebsites\.net$" />
+                  
+                </conditions>
+                <action type="Redirect" url="http://www.wokkax.com/{HTTP_X_WAWS_UNENCODED_URL}" logRewrittenUrl="true" />  
+          </rule> 
+        </rules>
+
+
+
+++++++++++++++
+
+Old action type : 
+<action type='Redirect' url='http://www.kax.org.il/{R:0}'
+
+Modified Action type :
+                <action type="Redirect" url="'http://www.kax.org.il{HTTP_X_WAWS_UNENCODED_URL}"

@@ -1,0 +1,30 @@
+Write-Output "PowerShell Timer trigger function executed at:$(get-date)";
+
+$TenantId ="sdfsdfsdfdfs"
+$passPlain =  "sdfsdfsdfsdfs=";  
+$idPlain="sdfsdfsdf-07c133b9b622"; # this is app id
+$subsname="<your sub name>";
+$subsid="6224b7d2-XXXXXXde8ce03ca1fa1";
+
+$password = ConvertTo-SecureString $passPlain -AsPlainText -Force
+$credential = New-Object System.Management.Automation.PSCredential ($idPlain, $password)
+
+
+Write-Output "PowerShell Timer trigger function executed at:$($password)";
+Write-Output "PowerShell Timer trigger function executed at:$($credential)";
+
+#Add-AzureRmAccount -ServicePrincipal -TenantId $TenantId -Credential $credential -SubscriptionName $subsname 
+#Login-AzureRmAccount -Credential $credential, $password
+#$VerbosePreference = "SilentlyContinue"
+
+
+Add-AzureRmAccount -ServicePrincipal -Tenant $TenantId -Credential $credential
+Select-AzureRmSubscription -SubscriptionId $subsid 
+
+#to test if login was success
+$result=  Get-AzureRmWebApp -Name AppWithDB1 -ResourceGroupName AppWithDB1
+$result
+Write-output $result.name 
+
+
+Write-Output "PowerShell Timer trigger function completed at:$(get-date)";
