@@ -1,0 +1,43 @@
+<html>
+<head>
+<script
+  src="jquery-2.2.4.min.js"
+  integrity=""
+  crossorigin="anonymous"></script>
+<script>  
+    $(document).ready(function () {  
+        $.ajax({  
+            type: "GET",  
+           // url: "https://webappanonomousaccess.azurewebsites.net/api/values",  
+           url: "https://functionproxyresponce.azurewebsites.net/route1",  
+            contentType: "application/json; charset=utf-8",  
+            dataType: "json",  
+            success: function (data) {  
+                //alert(JSON.stringify(data));   
+                
+                console.log(data);
+                $("#mydiv").text(data);
+               ; //End of foreach Loop   
+            }, //End of AJAX Success function  
+  
+            failure: function (data) {
+                
+                
+                console.log(data);
+                
+            }, //End of AJAX failure function  
+            error: function (data) {
+                
+                console.log(data);
+                $("#mydiv").text(data);
+            } //End of AJAX error function  
+  
+        });         
+    });  
+</script>  
+</head>
+<body>
+<div id="mydiv">APP with DB1</div>
+</body>
+
+</html>
