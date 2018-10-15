@@ -1,0 +1,7 @@
+c:\users\ppatidar\source\repos\AsyncAwaitDemo\AsyncAwaitDemo\bin\Debug\AsyncAwaitDemo.exe.config
+c:\users\ppatidar\source\repos\AsyncAwaitDemo\AsyncAwaitDemo\bin\Debug\AsyncAwaitDemo.exe
+c:\users\ppatidar\source\repos\AsyncAwaitDemo\AsyncAwaitDemo\bin\Debug\AsyncAwaitDemo.pdb
+c:\users\ppatidar\source\repos\AsyncAwaitDemo\AsyncAwaitDemo\obj\Debug\AsyncAwaitDemo.csprojAssemblyReference.cache
+c:\users\ppatidar\source\repos\AsyncAwaitDemo\AsyncAwaitDemo\obj\Debug\AsyncAwaitDemo.csproj.CoreCompileInputs.cache
+c:\users\ppatidar\source\repos\AsyncAwaitDemo\AsyncAwaitDemo\obj\Debug\AsyncAwaitDemo.exe
+c:\users\ppatidar\source\repos\AsyncAwaitDemo\AsyncAwaitDemo\obj\Debug\AsyncAwaitDemo.pdb
