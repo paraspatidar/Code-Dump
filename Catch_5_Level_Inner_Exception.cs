@@ -1,7 +1,7 @@
 //lets create and extension method wiht class
 public static class Extensions
     {
-        public static string DeepExceptiopn(this Exception ex)
+        public static string DeepException(this Exception ex)
         {
             string result = string.Empty;
             result = " Exception : LEVEL 1: " + Environment.NewLine + ex.Message+ "::::Trace===>"+ex.StackTrace;
