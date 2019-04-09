@@ -61,3 +61,39 @@ ServicePointManager.ServerCertificateValidationCallback =
                 return false;
             }
         }
+
+
+//another approach based on cert file or .pem data :
+
+ private static bool CheckServerCertificate(object sender, X509Certificate certificate,
+            X509Chain chain, SslPolicyErrors sslPolicyErrors)
+        {
+            // the lazy version here is:
+            // return true;
+
+            // better version - check that the CA thumbprint is in the chain
+            if (sslPolicyErrors == SslPolicyErrors.RemoteCertificateChainErrors)
+            {
+                // check that the untrusted ca is in the chain
+                var ca = new X509Certificate2("ca.pem");
+		    
+		    //Or if physical file is not available
+		    
+                var codedData= AppSettings["pem-certificate_base64-encoded-text"];
+                 var decodedstring = Convert.FromBase64String(codedData);
+                 // var bytedata=decodedstring.ToArray<byte>();
+                 ca =new X509Certificate2(decodedstring);
+		    
+                var caFound = chain.ChainElements
+                    .Cast<X509ChainElement>()
+                    .Any(x => x.Certificate.Thumbprint == ca.Thumbprint);
+
+                // note you could also hard-code the expected CA thumbprint,
+                // but pretty easy to load it from the pem file that aiven provide
+
+                return caFound;
+            }
+            return false;
+        }
+    }
+
