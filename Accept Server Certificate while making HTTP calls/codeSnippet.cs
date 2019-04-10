@@ -3,7 +3,8 @@ HttpClientHandler handler = new HttpClientHandler();
 HttpClient client = new HttpClient();
 client.BaseAddress =new Uri(destination);
 
-//register a cert validation call back 
+//register a cert validation call back , same callbacks are availble for other clients liek Redis cache, RabbitMQ etc
+//you can also have a look at another implementation in method :CheckServerCertificate
 ServicePointManager.ServerCertificateValidationCallback =
                 new RemoteCertificateValidationCallback(ValidateServerCertificate);
 				
@@ -24,7 +25,7 @@ ServicePointManager.ServerCertificateValidationCallback =
 			
 			
 
-			// here begins the validation method 
+			// here begins the validation method -option 1
 		private bool ValidateServerCertificate(object sender, X509Certificate certificate, X509Chain chain, SslPolicyErrors sslPolicyErrors)
         {
             // If the certificate is a valid, signed certificate, return true.
@@ -63,7 +64,7 @@ ServicePointManager.ServerCertificateValidationCallback =
         }
 
 
-//another approach based on cert file or .pem data :
+//another approach based on cert file or .pem data :option 2
 
  private static bool CheckServerCertificate(object sender, X509Certificate certificate,
             X509Chain chain, SslPolicyErrors sslPolicyErrors)
