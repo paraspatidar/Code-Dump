@@ -1,0 +1,43 @@
+//create master task list
+              var tasklist = new List<Task<XXXXX>();
+ 
+               foreach (var samlSettin in samlSettins)
+                {
+                   //call the asyn AddSaml2 method and dont await it but add it in task list
+                    var task = AddSaml2(consumerProfile);
+                    tasklist.Add(task);
+                }
+            
+ 
+            //now check to wait if all addSaml2 task are done
+            var deliveryTaks = Task.WhenAll(tasklist);
+ 
+            try
+            {
+                //now  await it so that we move ahead only when done (it will be max of the higest running task so we are good)
+                //also if you are intrested to know if all are done or not and also log something helpfull then
+                var deliveryResponce = await deliveryTaks;
+                if (deliveryResponce != null && deliveryResponce.Any())
+                {
+                    foreach (var deliveryResult in deliveryResponce)
+                    {
+                        if (deliveryResult != null && deliveryResult.Item2 != null && deliveryResult.Item2.Any())
+                        {
+                            _logger.LogDebug($"Adding invalid consumer '{deliveryResult.Item1.Name}' in the list...");
+                            invalidConsumers.Add(new ConsumerValidationResult() { ConsumerName = deliveryResult.Item1.Name, InvalidEntities = deliveryResult.Item2 });
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                AggregateException allExceptions = deliveryTaks.Exception;
+                _logger.LogError($"Delivery Task Exception Count: {allExceptions.InnerExceptions.Count}");
+                _logger.LogError($"Error during Delivery task: {ex}");
+                foreach (var e in allExceptions.Flatten().InnerExceptions)
+                {
+                    _logger.LogError(e.Message, e);
+                }
+                //its upto you if throw exception or ignore it if any one of them fails
+                throw;
+            }
